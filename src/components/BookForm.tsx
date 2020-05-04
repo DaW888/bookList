@@ -7,13 +7,13 @@ const BookForm: React.FC = () => {
     const [title, setTitle] = useState<string>('');
     const [author, setAuthor] = useState<string>('');
 
-    const titleRef: any = useRef<HTMLInputElement>(null);
+    const titleRef = useRef<HTMLInputElement>(null);
     const handleSubmit = (e: React.FormEvent): void => {
         e.preventDefault();
         dispatch({ type: 'ADD_BOOK', book: { title, author } });
         setTitle('');
         setAuthor('');
-        titleRef.current.focus();
+        titleRef.current?.focus();
     };
     return (
         <FormWrapper onSubmit={handleSubmit}>
