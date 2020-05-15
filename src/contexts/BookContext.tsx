@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useEffect } from 'react';
-import { BookReducer } from '../reducers/BookReducer';
+import { BookReducer, BookReducerActionsType } from '../reducers/BookReducer';
 
 type Props = {
     children: React.ReactNode;
@@ -11,7 +11,12 @@ export type bookProp = {
     id: string;
 };
 
-export const BookContext: React.Context<any> = createContext(null);
+type ContextType = {
+    books: bookProp[];
+    dispatch: React.Dispatch<BookReducerActionsType>;
+};
+
+export const BookContext = createContext<ContextType>({ books: [], dispatch: (): void => {} });
 
 const BookContextProvider = ({ children }: Props) => {
     const [books, dispatch] = useReducer(BookReducer, [], () => {
@@ -19,6 +24,7 @@ const BookContextProvider = ({ children }: Props) => {
         return localData ? JSON.parse(localData) : [];
     });
     useEffect(() => {
+        console.log(books, dispatch);
         localStorage.setItem('books', JSON.stringify(books));
     }, [books]);
 

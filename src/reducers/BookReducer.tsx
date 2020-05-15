@@ -1,34 +1,24 @@
 import { v4 as uuidv4 } from 'uuid';
 import { bookProp } from '../contexts/BookContext';
 
-enum BookReducerActions {
-    addBook = 'ADD_BOOK',
-    removeBook = 'REMOVE_BOOK',
-}
-
-// type BookReducerActionType = {
-//     type: 'REMOVE_BOOK', id: book.id
-//     dispatch({ type: 'ADD_BOOK', book: { title, author } });
-// }
-
-type BookReducerActionsType =
+export type BookReducerActionsType =
     | {
-          type: BookReducerActions.addBook;
+          type: 'ADD_BOOK';
           book: {
               title: string;
               author: string;
           };
       }
     | {
-          type: BookReducerActions.removeBook;
+          type: 'REMOVE_BOOK';
           id: string;
       };
 
 export const BookReducer = (state: Array<bookProp>, action: BookReducerActionsType) => {
     switch (action.type) {
-        case BookReducerActions.addBook:
+        case 'ADD_BOOK':
             return [...state, { title: action.book.title, author: action.book.author, id: uuidv4() }];
-        case BookReducerActions.removeBook:
+        case 'REMOVE_BOOK':
             return state.filter((book: bookProp) => book.id !== action.id);
         default:
             return state;
